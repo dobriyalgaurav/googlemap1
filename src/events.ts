@@ -30,6 +30,7 @@ export function getUserGeoLocation(map: google.maps.Map) {
             lng: position.coords.longitude,
           };
           map.panTo(pos);
+          //@ts-ignore
           const marker = new google.maps.marker.AdvancedMarkerElement({
             map: map,
             position: pos,
