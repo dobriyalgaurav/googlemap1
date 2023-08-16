@@ -32,7 +32,9 @@ async function initMap(): Promise<void> {
       content: divElement,
       title: loc.title,
     });
+    //@ts-ignore
     marker.addListener("click", ({ domEvent, latLng }) => {
+      //@ts-ignore
       const { target } = domEvent;
       infoWindow.close();
       infoWindow.setContent(marker.title);
