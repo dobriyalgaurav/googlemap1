@@ -25,7 +25,7 @@ async function initMap(): Promise<void> {
       "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
     divElement.appendChild(beachFlagImg);
     divElement.className = "beachflag";
-    divElement.setAttribute("data-label", loc.title);
+    divElement.setAttribute("data-tracking-label", loc.title);
     const marker = new AdvancedMarkerElement({
       map: map,
       position: loc,
