@@ -6,7 +6,7 @@ let map: google.maps.Map;
 async function initMap(): Promise<void> {
   // Request needed libraries.
   //@ts-ignore
-  const { Map } = (await google.maps.importLibrary(
+  const { Map, InfoWindow } = (await google.maps.importLibrary(
     "maps"
   )) as google.maps.MapsLibrary;
   const { AdvancedMarkerElement } = (await google.maps.importLibrary(
@@ -17,12 +17,26 @@ async function initMap(): Promise<void> {
     center: getLocations()[0],
     mapId: "test_id",
   });
-
+  const infoWindow = new InfoWindow();
   getLocations().forEach((loc) => {
-    new AdvancedMarkerElement({
+    const divElement = document.createElement("div");
+    const beachFlagImg = document.createElement("img");
+    beachFlagImg.src =
+      "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
+    divElement.appendChild(beachFlagImg);
+    divElement.className = "beachflag";
+    divElement.setAttribute("data-label", loc.title);
+    const marker = new AdvancedMarkerElement({
       map: map,
       position: loc,
+      content: divElement,
       title: loc.title,
+    });
+    marker.addListener("click", ({ domEvent, latLng }) => {
+      const { target } = domEvent;
+      infoWindow.close();
+      infoWindow.setContent(marker.title);
+      infoWindow.open(marker.map, marker);
     });
   });
   addClickEventsToLocations(map);
